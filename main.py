@@ -11,24 +11,34 @@ import os, sys
 prj     = "HAPPI"
 model   = "MIROC5"
 #run     = "C20-P15-001"
-run     = "C20-ALL-001"
+#run     = "C20-ALL-001"
+expr    = "C20"
+#scen    = "P15"
+scen    = "P20"
+lens    = [11,21,31,41]
+lrun    = ["%s-%s-%03d"%(expr,scen,ens)
+            for ens in lens]
 res     = "128x256"
 noleap  = True
 tstp_runmean = "day"
 
-#iYear, iMon = [2106,1]
-#eYear, eMon = [2115,12]
-#iYear_data  = 2106
-#eYear_data  = 2115
-#iMon_data   = 1
-
-iYear, iMon = [2006,1]
-eYear, eMon = [2015,12]
-iYear_data  = 2006
-eYear_data  = 2015
+iYear, iMon = [2106,1]
+eYear, eMon = [2115,12]
+iYear_data  = 2106
+eYear_data  = 2115
 iMon_data   = 1
 
+#iYear, iMon = [2006,1]
+#eYear, eMon = [2015,12]
+#iYear_data  = 2006
+#eYear_data  = 2015
+#iMon_data   = 1
 
+#iYear, iMon = [2006,1]
+#eYear, eMon = [2014,12]  # JRA55
+#iYear_data  = 2006
+#eYear_data  = 2014
+#iMon_data   = 1
 
 
 iYearMinMax = iYear_data
@@ -66,97 +76,102 @@ def exec_func(cmd):
 
 
 #*********************************
-# Preparation
+# START LOOP
 #---------------------------------
-cmd = ["python","prep.py"
-        , prj, model, run, res
-    ]
-exec_func(cmd)
-     
-#*********************************
-# Cyclone (ExC and TC)
-#---------------------------------
-cmd = ["python","c.runmean.wind.py"
-        , prj, model, run, res, tstp_runmean, noleap
-        , iYear, iMon, eYear, eMon
-    ]
-exec_func(cmd)
-
-cmd = ["python","c.findcyclone.py"
-        , prj, model, run, res, noleap
-        , iYear, iMon, eYear, eMon
-    ]
-exec_func(cmd)
-
-cmd = ["python","c.connectc.fwd.py"
-        , prj, model, run, res, noleap
-        , iYear, iMon, eYear, eMon
-    ]
-exec_func(cmd)
-
-flagresume = False
-cmd = ["python","c.connectc.bwd.py"
-        , prj, model, run, res, noleap, flagresume
-        , iYear, iMon, eYear, eMon
-    ]
-exec_func(cmd)
-
-cmd = ["python","c.mk.clist.obj.py"
-        , prj, model, run, res, noleap
-        , iYear, iMon, eYear, eMon
-    ]
-exec_func(cmd)
-
-#*********************************
-# Cyclone (TC)
-#---------------------------------
-cmd = ["python","tc.mk.clist.obj.py"
-        , prj, model, run, res, noleap
-        , iYear, iMon, eYear, eMon
-    ]
-exec_func(cmd)
-
-cmd = ["python","tc.mk.clist.obj.initState.py"
-        , prj, model, run, res, noleap
-        , iYear, iMon, eYear, eMon
-        , iYear_data, iMon_data
-    ]
-exec_func(cmd)
-
-#*********************************
-# Front
-#---------------------------------
-cmd = ["python","f.mk.orogdata.py"
-        , prj, model, run, res
-    ]
-exec_func(cmd)
-
-cmd = ["python","f.mk.potloc.obj.py"
-        , prj, model, run, res, noleap
-        , iYear, iMon, eYear, eMon
-    ]
-exec_func(cmd)
-
-#*********************************
-# Monsoon
-#---------------------------------
-cmd = ["python","ms.mkRegion.py"
-        , prj, model, run, res, noleap
-        , iYear_data, eYear_data
-    ]
-exec_func(cmd)
-
-cmd = ["python","ms.FindMinMax.py"
-        , prj, model, run, res, noleap
-        , iYearMinMax, eYearMinMax
-    ]
-exec_func(cmd)
-
-cmd = ["python","ms.mkMonsoon.py"
-        , prj, model, run, res, noleap
-        , iYear, iMon, eYear, eMon
-        , iYearMinMax, eYearMinMax
-        , iYear_data,  eYear_data
-    ]
-exec_func(cmd)
-
+for run in lrun:
+    #*********************************
+    # Preparation
+    #---------------------------------
+    cmd = ["python","prep.py"
+            , prj, model, run, res
+        ]
+    exec_func(cmd)
+         
+    #*********************************
+    # Cyclone (ExC and TC)
+    #---------------------------------
+    cmd = ["python","c.runmean.wind.py"
+            , prj, model, run, res, tstp_runmean, noleap
+            , iYear, iMon, eYear, eMon
+        ]
+    exec_func(cmd)
+    
+    cmd = ["python","c.findcyclone.py"
+            , prj, model, run, res, noleap
+            , iYear, iMon, eYear, eMon
+        ]
+    exec_func(cmd)
+    
+    cmd = ["python","c.connectc.fwd.py"
+            , prj, model, run, res, noleap
+            , iYear, iMon, eYear, eMon
+        ]
+    exec_func(cmd)
+    
+    flagresume = False
+    cmd = ["python","c.connectc.bwd.py"
+            , prj, model, run, res, noleap, flagresume
+            , iYear, iMon, eYear, eMon
+        ]
+    exec_func(cmd)
+    
+    cmd = ["python","c.mk.clist.obj.py"
+            , prj, model, run, res, noleap
+            , iYear, iMon, eYear, eMon
+        ]
+    exec_func(cmd)
+    
+    #*********************************
+    # Cyclone (TC)
+    #---------------------------------
+    cmd = ["python","tc.mk.clist.obj.py"
+            , prj, model, run, res, noleap
+            , iYear, iMon, eYear, eMon
+        ]
+    exec_func(cmd)
+    
+    cmd = ["python","tc.mk.clist.obj.initState.py"
+            , prj, model, run, res, noleap
+            , iYear, iMon, eYear, eMon
+            , iYear_data, iMon_data
+        ]
+    exec_func(cmd)
+    
+    #*********************************
+    # Front
+    #---------------------------------
+    cmd = ["python","f.mk.orogdata.py"
+            , prj, model, run, res
+        ]
+    exec_func(cmd)
+    
+    cmd = ["python","f.mk.potloc.obj.py"
+            , prj, model, run, res, noleap
+            , iYear, iMon, eYear, eMon
+        ]
+    exec_func(cmd)
+    
+    #*********************************
+    # Monsoon
+    #---------------------------------
+    cmd = ["python","ms.mkRegion.py"
+            , prj, model, run, res, noleap
+            , iYear_data, eYear_data
+        ]
+    exec_func(cmd)
+    
+    cmd = ["python","ms.FindMinMax.py"
+            , prj, model, run, res, noleap
+            , iYearMinMax, eYearMinMax
+        ]
+    exec_func(cmd)
+    
+    cmd = ["python","ms.mkMonsoon.py"
+            , prj, model, run, res, noleap
+            , iYear, iMon, eYear, eMon
+            , iYearMinMax, eYearMinMax
+            , iYear_data,  eYear_data
+        ]
+    exec_func(cmd)
+    
+    

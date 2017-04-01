@@ -36,7 +36,7 @@ if len(largv)>1:
   flagresume = bool(flagresume)
   iYear,iMon, eYear, eMon = map(int,largv[7:])
 iDTime = datetime(iYear,iMon,1,6)
-eDTime = datetime(iYear,eMon,31,18)
+eDTime = datetime(eYear,eMon,31,18)
 #-------------------------
 
 

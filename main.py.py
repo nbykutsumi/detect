@@ -5,8 +5,8 @@ prj    = "HAPPI"
 model  = "MIROC5"
 expr   = "C20"
 #lscen  = ["P15","P20"]
-#scen  = ["ALL"]
-lscen  = ["P20"]
+lscen  = ["ALL","P20"]
+#lscen  = ["P15"]
 
 lens   = [1]
 #lens   = [2,3,4,5]

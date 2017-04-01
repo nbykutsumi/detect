@@ -34,7 +34,7 @@ if len(largv)>1:
   iYear,iMon, eYear, eMon = map(int,largv[6:6+4])
   iYear_data, iMon_data   = map(int,largv[10:10+2])
 iDTime = datetime(iYear,iMon,1,6)
-eDTime = datetime(iYear,eMon,31,18)
+eDTime = datetime(eYear,eMon,31,18)
 #-------------------------
 
 

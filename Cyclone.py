@@ -46,7 +46,7 @@ def fortpos2pyxy(number, nx, miss_int):
     ix_py = miss_int
   else:
     iy_py = int((number-1.0)/nx)      # iy_py = 0,1,2,..
-    ix_py = number - nx*iy_py-1   # ix_py = 0,1,2,..
+    ix_py = int(number - nx*iy_py-1)   # ix_py = 0,1,2,..
   #----
   return ix_py, iy_py
 #---------------------------------------------------
@@ -381,7 +381,6 @@ class Cyclone(Const):
     
         #-- List  -------
         oList  = [x,y,oVar] 
-  
         #---- thrvort ----
         if rvort < thrvort:
           #print "rvort",rvort,"<",thrvort
@@ -472,7 +471,7 @@ class Cyclone_2D(Cyclone):
 
   def mk_a2tc(self, DTime, locfill=False):
     if len(self.instDict.dictTC[DTime]) >0:
-      aList     = zip(*array(self.instDict.dictTC[DTime]))
+      aList     = zip(*(self.instDict.dictTC[DTime]))
       a2dat     = self.a2miss.copy()
       if locfill==False:
         a2dat[ aList[1], aList[0]] = aList[-1]
@@ -485,7 +484,7 @@ class Cyclone_2D(Cyclone):
 
   def mk_a2exc(self, DTime, locfill=False):
     if len(self.instDict.dictExC[DTime]) >0:
-      aList     = zip(*array(self.instDict.dictExC[DTime], int))
+      aList     = zip(*(self.instDict.dictExC[DTime]))
       a2dat     = self.a2miss.copy()
 
       if locfill==False:

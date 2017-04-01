@@ -33,7 +33,7 @@ if len(largv)>1:
   noleap     = bool(noleap)
   iYear,iMon, eYear, eMon = map(int,largv[7:])
 iDTime = datetime(iYear,iMon,1,0)
-eDTime = datetime(iYear,eMon,31,18)
+eDTime = datetime(eYear,eMon,31,18)
 #-------------------------
 
 print "*"*50

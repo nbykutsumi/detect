@@ -31,7 +31,7 @@ if len(largv)>1:
   noleap     = bool(noleap)
   iYear,iMon, eYear, eMon = map(int,largv[6:])
 iDTime = datetime(iYear,iMon,1,6)
-eDTime = datetime(iYear,eMon,31,18)
+eDTime = datetime(eYear,eMon,31,18)
 #-------------------------
 
 

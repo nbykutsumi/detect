@@ -9,10 +9,10 @@ import os, sys
 prj    = "HAPPI"
 model  = "MIROC5"
 expr   = "C20"
-lscen  = ["P15","P20"]
-#scen  = ["ALL"]
-lens   = [1]
-#lens   = [2,3,4,5]
+#lscen  = ["P15","P20"]
+lscen  = ["P20"]
+#lens   = [1]
+lens   = [11,21,31,41]
 
 dlYear = {
            "ALL":range(2006,2015+1)
@@ -42,6 +42,7 @@ ldat.append(["prcp","","mon"])  # ms.mkRegion
 ldat.append(["spfh",850,"1dy"])  # ms.FindMinMax
 ldat.append(["spfh",500,"1dy"])  # ms.FindMinMax
 ldat.append(["spfh",250,"1dy"])  # ms.FindMinMax
+ldat.append(["prcp","","6hr"])  # precip analysis
  
 def ret_nz(tstp):
     if   tstp == "6hr":return 1460

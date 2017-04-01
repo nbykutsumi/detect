@@ -13,10 +13,11 @@ import util_para
 import detect_func
 #--------------------------------------
 iyear = 2106
+#eyear = 2115
 eyear = 2106
 lyear = range(iyear,eyear+1)
 #lseason = ["ALL"]
-lseason = [1]
+lseason = [8]
 
 #prj     = "JRA55"
 #model   = "__"
@@ -26,7 +27,7 @@ lseason = [1]
 prj     = "HAPPI"
 model   = "MIROC5"
 #run     = "C20-ALL-001"
-run     = "C20-P15-001"
+run     = "C20-P20-001"
 res     = "128x256"
 
 region= "GLOB"

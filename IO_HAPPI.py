@@ -4,10 +4,10 @@ from datetime import datetime, timedelta
 
 class IO_Happi(Happi):
     def __init__(self, model, run, res):
-        prj, expr, ens = run.split("-")[:3]
+        expr, scen, ens = run.split("-")[:3]
         ens  = int(ens)
         Happi.__init__(self)
-        Happi.__call__(self, model, prj, expr, ens)
+        Happi.__call__(self, model, expr, scen, ens)
 
         self.dvar = {
                 "ta"   :"T"

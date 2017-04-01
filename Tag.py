@@ -14,25 +14,16 @@ class Tag(ConstMask.Const):
 
     self.miss    = miss
     self.Front   = Front.Front(cfg, miss)
-    #self.Monsoon = Monsoon.MonsoonMoist(model=model, res=res, var="PWAT")
+    self.Monsoon = Monsoon.MonsoonMoist(cfg)
     self.Lat     = self.Front.Lat
     self.Lon     = self.Front.Lon
-  #def init_cyclone(self, Year, Mon, tctype="bst"):
-  #  """
-  #  tctype: "obj", "bst"
-  #  """
-  #  self.Cyclone = Cyclone.Cyclone_2D(Year, Mon, tctype=tctype, miss=self.miss)
-  #  return self
 
-  #def init_cyclone(self, iYM, eYM, model="JRA55", tctype="bst"):
   def init_cyclone(self, iYM, eYM, cfg, tctype="bst"):
     """
     tctype: "obj", "bst"
     """
     self.Cyclone = Cyclone.Cyclone_2D(iYM, eYM, cfg, tctype=tctype, miss=self.miss)
     return self
-
-
 
   def mkMask(self, tag, DTime, radkm=False, miss=False):
     """
@@ -69,7 +60,7 @@ class Tag(ConstMask.Const):
       return ma.masked_where(a2c != miss, a2f).filled(1.0)
 
     elif tag == "ms":
-      return self.Monsoon.loadMonsoonMoist(DTime, maskflag=True).filled(miss)
+      return self.Monsoon.loadMonsoonMoist("spfh_3lev", DTime, maskflag=True).filled(miss)
 
     else:
       print "check! tag=",tag
