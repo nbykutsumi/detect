@@ -9,10 +9,10 @@ import os, sys
 prj    = "HAPPI"
 model  = "MIROC5"
 expr   = "C20"
-#lscen  = ["P15","P20"]
-lscen  = ["P20"]
+lscen  = ["ALL","P15","P20"]
+#lscen  = ["P20"]
 #lens   = [1]
-lens   = [11,21,31,41]
+lens   = [3,4,5,6,7,8,9,10]
 
 dlYear = {
            "ALL":range(2006,2015+1)

@@ -8,41 +8,47 @@ import os, sys
 #noleap  = False
 #tstp_runmean = "6hr"
 
-prj     = "HAPPI"
-model   = "MIROC5"
-#run     = "C20-P15-001"
-#run     = "C20-ALL-001"
-expr    = "C20"
-#scen    = "P15"
-scen    = "P20"
-lens    = [11,21,31,41]
-lrun    = ["%s-%s-%03d"%(expr,scen,ens)
-            for ens in lens]
-res     = "128x256"
-noleap  = True
-tstp_runmean = "day"
-
-iYear, iMon = [2106,1]
-eYear, eMon = [2115,12]
-iYear_data  = 2106
-eYear_data  = 2115
-iMon_data   = 1
-
-#iYear, iMon = [2006,1]
-#eYear, eMon = [2015,12]
-#iYear_data  = 2006
-#eYear_data  = 2015
+#prj     = "HAPPI"
+#model   = "MIROC5"
+##run     = "C20-P15-001"
+##run     = "C20-ALL-001"
+#expr    = "C20"
+#lscen   = ["P15","P20"]
+##lscen   = ["P20"]
+##lens    = [11,21,31,41]
+##lens    = [21]
+#lens    = [31,41]
+#lrun    = ["%s-%s-%03d"%(expr,scen,ens)
+#            for scen in lscen
+#            for ens  in lens]
+##lrun.remove("C20-P15-021")
+#print lrun
+#
+#res     = "128x256"
+#noleap  = True
+#tstp_runmean = "day"
+#
+#iYear, iMon = [2106,1]
+#eYear, eMon = [2115,12]
+#iYear_data  = 2106
+#eYear_data  = 2115
 #iMon_data   = 1
-
-#iYear, iMon = [2006,1]
-#eYear, eMon = [2014,12]  # JRA55
-#iYear_data  = 2006
-#eYear_data  = 2014
-#iMon_data   = 1
-
-
-iYearMinMax = iYear_data
-eYearMinMax = eYear_data
+#
+##iYear, iMon = [2006,1]
+##eYear, eMon = [2015,12]
+##iYear_data  = 2006
+##eYear_data  = 2015
+##iMon_data   = 1
+#
+##iYear, iMon = [2006,1]
+##eYear, eMon = [2014,12]  # JRA55
+##iYear_data  = 2006
+##eYear_data  = 2014
+##iMon_data   = 1
+#
+#
+#iYearMinMax = iYear_data
+#eYearMinMax = eYear_data
 
 #------------------------------
 largv = sys.argv
@@ -54,7 +60,7 @@ if len(largv)>1:
     iMon_data                 = largv[13]
     iYearMinMax, eYearMinMax  = largv[14:14+2]
 
-    
+lrun   = [run] 
 #logDir = "~/log"
 logDir = "/home/utsumi/log"
 #*********************************
@@ -79,6 +85,9 @@ def exec_func(cmd):
 # START LOOP
 #---------------------------------
 for run in lrun:
+    print '*'*50
+    print 'run=',run
+    print '*'*50
     #*********************************
     # Preparation
     #---------------------------------

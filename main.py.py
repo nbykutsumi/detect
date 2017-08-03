@@ -5,11 +5,18 @@ prj    = "HAPPI"
 model  = "MIROC5"
 expr   = "C20"
 #lscen  = ["P15","P20"]
-lscen  = ["ALL","P20"]
+lscen  = ["ALL","P15","P20"]
 #lscen  = ["P15"]
 
-lens   = [1]
-#lens   = [2,3,4,5]
+#lens   = [2]
+#lens   = [3,4,5,6]
+#lens   = [4,5,6]
+#lens   = [7,8,9,10]
+#lens   = range(12,15+1)
+#lens   = range(16,20+1)
+#lens   = range(22,30+1)
+#lens   = range(32,40+1)
+lens   = range(42,50+1)
 
 dYM  = {
            "ALL":[[2006,1],[2015,12]]
