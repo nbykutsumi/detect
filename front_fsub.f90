@@ -792,8 +792,196 @@ end do
 return
 END SUBROUTINE fill_front_gap
 
+
 !*********************************************************
 SUBROUTINE mk_a2contour(a2in, v, vtrue_out, miss, nx, ny, a2contour)
+implicit none
+!--- in -------
+integer                  nx, ny
+real,dimension(nx,ny) :: a2in
+!f2py intent(in)         a2in
+real                     v, vtrue_out, miss
+!f2py intent(in)         v, vtrue_out, miss
+!--- out ------
+real,dimension(nx,ny) :: a2contour
+!f2py intent(out)        a2contour
+!--- calc -----
+integer                  k
+integer                  ix, iy
+integer                  ixn, ixs, ixw, ixe
+integer                  iyn, iys, iyw, iye
+real                     vn, vs, vw, ve
+real                     vnw, vne, vsw, vse
+real                     vo, vmid
+real,dimension(8)     :: a1v
+!--------------
+a2contour = miss
+a1v  = miss
+
+!-----------------------
+! iy = 1 & ny
+!-----------------------
+do iy = 1,ny, ny-1
+  do ix = 1,nx
+    !---
+    call ixy2iixy(nx, ny, ix, iy+1, ixn, iyn)
+    call ixy2iixy(nx, ny, ix, iy-1, ixs, iys)
+    call ixy2iixy(nx, ny, ix-1, iy, ixw, iyw)
+    call ixy2iixy(nx, ny, ix+1, iy, ixe, iye)
+    !---
+    vo  = a2in(ix, iy)
+    vn  = a2in(ixn, iyn)
+    vs  = a2in(ixs, iys)
+    vw  = a2in(ixw, iyw)
+    ve  = a2in(ixe, iye)
+    vnw = a2in(ixw, iyn)
+    vne = a2in(ixe, iyn)
+    vsw = a2in(ixw, iys)
+    vse = a2in(ixe, iys)
+    a1v(1) = vnw
+    a1v(2) = vn
+    a1v(3) = vne
+    a1v(4) = vw
+    a1v(5) = ve
+    a1v(6) = vsw
+    a1v(7) = vs
+    a1v(8) = vse
+    !---
+    if (vo .le. v)then
+      do k = 1,8
+        if (a1v(k) .ge. v)then
+          vmid = (a1v(k) + v)*0.5
+          if ( v .lt. vmid) then
+            a2contour(ix,iy) = vtrue_out
+            exit
+          end if
+        end if
+      end do
+    else if (vo .gt. v)then
+      do k = 1,8
+        if (a1v(k) .ge. v)then
+          vmid = (a1v(k) + v)*0.5
+          if ( v .ge. vmid) then
+            a2contour(ix,iy) = vtrue_out
+            exit
+          end if
+        end if
+      end do
+    end if
+    !---
+  end do
+end do
+
+!-----------------------
+! iy = 2 & ny-1
+! ix = 1 & nx
+!-----------------------
+do iy = 2,ny-1
+  do ix = 1,nx, nx-1
+    !---
+    call ixy2iixy(nx, ny, ix, iy+1, ixn, iyn)
+    call ixy2iixy(nx, ny, ix, iy-1, ixs, iys)
+    call ixy2iixy(nx, ny, ix-1, iy, ixw, iyw)
+    call ixy2iixy(nx, ny, ix+1, iy, ixe, iye)
+    !---
+    vo  = a2in(ix, iy)
+    vn  = a2in(ixn, iyn)
+    vs  = a2in(ixs, iys)
+    vw  = a2in(ixw, iyw)
+    ve  = a2in(ixe, iye)
+    vnw = a2in(ixw, iyn)
+    vne = a2in(ixe, iyn)
+    vsw = a2in(ixw, iys)
+    vse = a2in(ixe, iys)
+    a1v(1) = vnw
+    a1v(2) = vn
+    a1v(3) = vne
+    a1v(4) = vw
+    a1v(5) = ve
+    a1v(6) = vsw
+    a1v(7) = vs
+    a1v(8) = vse
+    !---
+    if (vo .le. v)then
+      do k = 1,8
+        if (a1v(k) .ge. v)then
+          vmid = (a1v(k) + v)*0.5
+          if ( v .lt. vmid) then
+            a2contour(ix,iy) = vtrue_out
+            exit
+          end if
+        end if
+      end do
+    else if (vo .gt. v)then
+      do k = 1,8
+        if (a1v(k) .ge. v)then
+          vmid = (a1v(k) + v)*0.5
+          if ( v .ge. vmid) then
+            a2contour(ix,iy) = vtrue_out
+            exit
+          end if
+        end if
+      end do
+    end if
+    !---
+  end do
+end do
+
+!-----------------------
+! iy = 2,3, ... , ny-1
+! ix = 2,3, ... , nx-1
+!-----------------------
+do iy = 2,ny-1
+  do ix = 2,nx-1
+    !---
+    vo  = a2in(ix, iy)
+    vn  = a2in(ix, iy+1)
+    vs  = a2in(ix, iy-1)
+    vw  = a2in(ix-1, iy)
+    ve  = a2in(ix+1, iy)
+    vnw = a2in(ix-1, iy+1)
+    vne = a2in(ix+1, iy+1)
+    vsw = a2in(ix-1, iy-1)
+    vse = a2in(ix+1, iy-1)
+    a1v(1) = vnw
+    a1v(2) = vn
+    a1v(3) = vne
+    a1v(4) = vw
+    a1v(5) = ve
+    a1v(6) = vsw
+    a1v(7) = vs
+    a1v(8) = vse
+    !---
+    if (vo .le. v)then
+      do k = 1,8
+        if (a1v(k) .ge. v)then
+          vmid = (a1v(k) + v)*0.5
+          if ( v .lt. vmid) then
+            a2contour(ix,iy) = vtrue_out
+            exit
+          end if
+        end if
+      end do
+    else if (vo .gt. v)then
+      do k = 1,8
+        if (a1v(k) .ge. v)then
+          vmid = (a1v(k) + v)*0.5
+          if ( v .ge. vmid) then
+            a2contour(ix,iy) = vtrue_out
+            exit
+          end if
+        end if
+      end do
+    end if
+    !---
+  end do
+end do
+
+return
+END SUBROUTINE  mk_a2contour
+
+!*********************************************************
+SUBROUTINE old_mk_a2contour(a2in, v, vtrue_out, miss, nx, ny, a2contour)
 implicit none
 !--- in -------
 integer                  nx, ny
@@ -922,7 +1110,10 @@ do iy = 2,ny-1
 end do
 
 return
-END SUBROUTINE  mk_a2contour
+END SUBROUTINE  old_mk_a2contour
+
+!*********************************************************
+
 
 !*********************************************************
 SUBROUTINE mk_a2meanunitaxis_h98_apdx2_1(a2inx, a2iny, miss, nx, ny, a2meanunitaxis_x, a2meanunitaxis_y)

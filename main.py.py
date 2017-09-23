@@ -4,9 +4,8 @@ import os, sys
 prj    = "HAPPI"
 model  = "MIROC5"
 expr   = "C20"
-#lscen  = ["P15","P20"]
-lscen  = ["ALL","P15","P20"]
-#lscen  = ["P15"]
+#lscen  = ["ALL","P15","P20"]
+lscen  = ["P20"]
 
 #lens   = [2]
 #lens   = [3,4,5,6]
@@ -16,7 +15,7 @@ lscen  = ["ALL","P15","P20"]
 #lens   = range(16,20+1)
 #lens   = range(22,30+1)
 #lens   = range(32,40+1)
-lens   = range(42,50+1)
+lens   = range(8,50+1)
 
 dYM  = {
            "ALL":[[2006,1],[2015,12]]

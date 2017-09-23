@@ -34,7 +34,6 @@ if len(largv)>1:
 iDTime = datetime(iYear,iMon,1,6)
 eDTime = datetime(eYear,eMon,31,18)
 #-------------------------
-
 #ltq    = ["t","q"]
 ltq    = ["t"]
 miss  = -9999.0
